@@ -2,8 +2,12 @@
 Open-Closed Principle
 
 Classes devem estar fechadas para modificação, mas abertas para extensão
+
+-> Nos exemplos em questão sempre que houver a necessidade de criar um novo animal ou novo tipo de cliente, seria necessária
+a modificação da classe animal e discount. Tal situação poderia ser evitada implementando métodos genéricos na classe principal
+e estabelecendo subclasses com implementações específicas do método
 """
-class Animal:
+'''class Animal:
     def __init__(self, name: str):
         self.name = name
     
@@ -27,7 +31,48 @@ def animal_sound(animals: list):
     for animal in animals:
         animal.make_sound()
 
-animal_sound(animals)
+animal_sound(animals)'''
+
+from abc import ABC, abstractmethod
+
+class Main():
+    def __init__(self, animals: list):
+        self.animals = animals
+
+    def animal_sound(self):
+        for animal in self.animals:
+            animal.make_sound()
+
+    def adicionar_animal(self, Tipo, nome):
+        self.animals.append(Tipo(nome))
+
+class Animal(ABC):
+    def __init__(self, name: str):
+        self.name = name
+
+    def get_name(self) -> str:
+        return self.name
+
+    @abstractmethod
+    def make_sound(self):
+        pass
+
+class Lion(Animal):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def make_sound(self):
+        #detalhes do método
+        pass
+
+class Mouse(Animal):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def make_sound(self):
+        #detalhes do método
+        pass
+
 
 
 """
